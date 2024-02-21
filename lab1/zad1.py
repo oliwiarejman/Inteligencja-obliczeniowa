@@ -8,7 +8,7 @@ def biorytmy():
     day = int(input("Podaj dzien urodzenia: " ))
 
     birthday = datetime(year, month, day)
-    days = (datetime.now() - birthday).days
+    days = (datetime.now() - birthday).days + 1
 
     yp = math.sin(((2*math.pi)/23)*days)
     ye = math.sin(((2*math.pi)/28)*days)
