@@ -23,7 +23,7 @@ def main():
     plot_trajectory(v0, alpha_rad, h, cel)
 
 def calculate_distance(v0, alpha, h):
-    distance = (v0 ** 2) * np.sin(2 * alpha) / 9.81
+    distance = (v0 * np.sin(alpha) + np.sqrt(v0**2 * np.sin(alpha)**2 + 2 * 9.81 * h)) * v0 * np.cos(alpha) / 9.81
     return distance
 
 def plot_trajectory(v0, alpha, h, cel):
@@ -31,9 +31,9 @@ def plot_trajectory(v0, alpha, h, cel):
     t = np.linspace(0, t_flight, num=1000)
 
     x = v0 * np.cos(alpha) * t
-    y = -0.5 * 9.81 * t**2 + v0 * np.sin(alpha) * t + h
+    y = -9.81/(2 * (v0*np.cos(alpha))**2) * x**2 + np.tan(alpha) * x + h
 
-    plt.figure(figsize=(8, 6))
+    # plt.figure(figsize=(8, 6))
     plt.plot(x, y, label="Trajektoria pocisku")
     plt.scatter(cel, 0, color='red', label="Cel")
     plt.xlabel("Dystans (m)")
