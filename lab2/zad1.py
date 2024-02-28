@@ -1,4 +1,5 @@
 import pandas as pd
+import difflib
 
 df = pd.read_csv("iris_with_errors.csv")
 
@@ -14,12 +15,16 @@ for column in df.columns[:-1]:
 
 print(df)
 
-df['variety'] = df['variety'].str.capitalize() 
+valid_varieties = ["Setosa", "Versicolor", "Virginica"]
 
+def find_similar(variety):
+    matches = difflib.get_close_matches(variety.capitalize(), valid_varieties)
+    if matches:
+        return matches[0]
+    else:
+        return variety
 
-print(df['variety'].unique())
-
-df['variety'] = df['variety'].replace({"Versicolour": "Versicolor", "Virginicaa": "Virginica"})
+df['variety'] = df['variety'].apply(find_similar)
 
 print(df['variety'].unique())
 
