@@ -32,6 +32,5 @@ print(score)
 
 confusion_matrix = metrics.confusion_matrix(test_classes, prediction, labels=['Setosa', 'Virginica', 'Versicolor'])
 print(confusion_matrix)
-# Wygrana
 # (zaleznosc - przy kazdym uruchomieniu programu drzewo jest generowane na nowo, 
 # wiec wyniki bywaja rozne - raz nauczy sie lepiej, raz gorzej)
