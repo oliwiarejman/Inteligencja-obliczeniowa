@@ -1,33 +1,37 @@
 import pandas as pd
+from sklearn import tree
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier, export_text
-from sklearn.metrics import accuracy_score, confusion_matrix
-import seaborn as sns
-import matplotlib.pyplot as plt
-
+from sklearn import metrics
+import graphviz
 df = pd.read_csv("iris.csv")
+# podzial na zbior testowy 0% i treningowy 70% z ziarnem 13
+# podzial na zbior testowy (30%) i treningowy (70%), ziarno losowosci = 13
+(train_set, test_set) = train_test_split(df.values, train_size=0.7, random_state=281195)
 
-X = df.iloc[:, :-1]
-y = df.iloc[:, -1]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+print(test_set)
+print(test_set.shape[0])
 
-clf = DecisionTreeClassifier(random_state=42)
+train_inputs = train_set[:, 0:4]
+train_classes = train_set[:, 4]
+test_inputs = test_set[:, 0:4]
+test_classes = test_set[:, 4]
 
-clf.fit(X_train, y_train)
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(train_inputs, train_classes)
+print(clf.predict([[5.1, 3.8, 1.9, 0.4]]))
+tree.plot_tree(clf)
 
-tree_rules = export_text(clf, feature_names=X.columns.tolist())
-print(tree_rules)
+dot_data = tree.export_graphviz(clf, out_file=None)
+graph = graphviz.Source(dot_data)
+graph.render("iris")
 
-y_pred = clf.predict(X_test)
+print("Predicting test data")
+prediction = clf.predict(test_inputs)
+score = metrics.accuracy_score(test_classes, prediction)
+print(score)
 
-accuracy = accuracy_score(y_test, y_pred)
-print("Dokładność klasyfikatora z sklearn: {:.2f}%".format(accuracy * 100))
-
-cm = confusion_matrix(y_test, y_pred)
-
-plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=df['class'].unique(), yticklabels=df['class'].unique())
-plt.xlabel('Predicted')
-plt.ylabel('Actual')
-plt.title('Confusion Matrix')
-plt.show()
+confusion_matrix = metrics.confusion_matrix(test_classes, prediction, labels=['Setosa', 'Virginica', 'Versicolor'])
+print(confusion_matrix)
+# Wygrana
+# (zaleznosc - przy kazdym uruchomieniu programu drzewo jest generowane na nowo, 
+# wiec wyniki bywaja rozne - raz nauczy sie lepiej, raz gorzej)
