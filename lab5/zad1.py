@@ -1,12 +1,12 @@
 import numpy as np
-from tensorflow.keras import metrics
+from tensorflow.python.keras import metrics
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.utils import plot_model
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense
+# from tensorflow.python.keras.utils import plot_model
 
 # Load the iris dataset
 iris = load_iris()
