@@ -5,7 +5,7 @@ import numpy as np
 from keras.applications import VGG16
 from keras.models import Sequential
 from keras.layers import Dense, Flatten
-from keras.preprocessing.image import ImageDataGenerator
+from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
 szerokosc, wysokosc = 224, 224
 
