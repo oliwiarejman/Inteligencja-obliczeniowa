@@ -2,9 +2,9 @@ import cv2
 import os
 import numpy as np
 
-from keras.applications import VGG16
-from keras.models import Sequential
-from keras.layers import Dense, Flatten
+from keras.src.applications import VGG16
+from keras.src.models import Sequential
+from keras.src.layers import Dense, Flatten
 from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
 szerokosc, wysokosc = 224, 224
